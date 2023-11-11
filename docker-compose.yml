@@ -31,7 +31,7 @@ services:
         networks:
             - meeting-room-app
         volumes:
-            - mysql_meeting_room_data:/var/lib/mysql
+            - mysql_data:/var/lib/mysql
     app:
         build:
             context: ./
@@ -44,4 +44,4 @@ services:
         networks:
             - meeting-room-app
 volumes:
-    mysql_meeting_room_data:
+    mysql_data:
