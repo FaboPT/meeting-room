@@ -87,7 +87,7 @@ docker-compose exec app npm run build
 ```
 Host: 127.0.0.1
 Port: 3308
-Username : root
+Username: root
 Password: yourdatabasepassword
 ```
 
