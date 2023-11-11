@@ -88,10 +88,10 @@ docker-compose exec app php artisan migrate --seed
 docker-compose exec app npm install
 ```
 
-### Run frontend
+### Build frontend
 
 ```
-docker-compose exec app npm run dev
+docker-compose exec app npm run build
 ```
 
 ### Open browser http://localhost:8000
