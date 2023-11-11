@@ -10,25 +10,6 @@
 
 ## Installation/Configuration
 
-### Install dependencies
-
-#### macOS / Linux
-
-```
-docker run --rm -v $(pwd):/app composer install
-```
-
-#### Windows (Git Bash)
-
-```
-docker run --rm -v /$(pwd):/app composer install
-```
-
-#### Windows (Powershell)
-
-```
-docker run --rm -v ${PWD}:/app composer install
-```
 
 ### Copy all file .env.example to .env
 
@@ -61,6 +42,32 @@ change value line **25** phpunit.xml in **phpunit.xml**
 
 ```
 docker-compose up -d
+```
+
+### Install dependencies
+
+```
+docker-compose exec app composer install
+```
+
+### Alternative to Install Dependencies
+
+#### macOS / Linux
+
+```
+docker run --rm -v $(pwd):/app composer install
+```
+
+#### Windows (Git Bash)
+
+```
+docker run --rm -v /$(pwd):/app composer install
+```
+
+#### Windows (Powershell)
+
+```
+docker run --rm -v ${PWD}:/app composer install
 ```
 
 ### Generate APP Key
