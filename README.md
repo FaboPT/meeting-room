@@ -50,26 +50,6 @@ docker-compose up -d
 docker-compose exec app composer install
 ```
 
-### Alternative to install composer dependencies
-
-#### macOS / Linux
-
-```
-docker run --rm -v $(pwd):/app composer install
-```
-
-#### Windows (Git Bash)
-
-```
-docker run --rm -v /$(pwd):/app composer install
-```
-
-#### Windows (Powershell)
-
-```
-docker run --rm -v ${PWD}:/app composer install
-```
-
 ### Generate APP Key
 
 ```
@@ -111,4 +91,24 @@ Username : root
 Password: yourdatabasepassword
 ```
 
+## Extras
 
+### Alternative to install composer dependencies
+
+#### macOS / Linux
+
+```
+docker run --rm -v $(pwd):/app composer install
+```
+
+#### Windows (Git Bash)
+
+```
+docker run --rm -v /$(pwd):/app composer install
+```
+
+#### Windows (Powershell)
+
+```
+docker run --rm -v ${PWD}:/app composer install
+```
