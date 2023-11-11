@@ -44,13 +44,13 @@ change value line **25** phpunit.xml in **phpunit.xml**
 docker-compose up -d
 ```
 
-### Install dependencies
+### Install composer dependencies
 
 ```
 docker-compose exec app composer install
 ```
 
-### Alternative to Install Dependencies
+### Alternative to install composer dependencies
 
 #### macOS / Linux
 
@@ -80,6 +80,18 @@ docker-compose exec app php artisan key:generate
 
 ```
 docker-compose exec app php artisan migrate --seed
+```
+
+### Install node dependencies
+
+```
+docker-compose exec app npm install
+```
+
+### Run frontend
+
+```
+docker-compose exec app npm run dev
 ```
 
 ### Open browser http://localhost:8000
