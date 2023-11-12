@@ -21,7 +21,7 @@ class RoomSeeder extends Seeder
             Room::factory()->create([
                 'id' => $room['id'],
                 'name' => $room['name'],
-                'capacity' => $room['capacity']
+                'capacity' => $room['capacity'],
             ]);
         }
     }

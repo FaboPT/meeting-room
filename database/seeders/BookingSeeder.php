@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Booking;
 use Database\Seeders\Support\ReadJsonFile;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class BookingSeeder extends Seeder
@@ -24,7 +23,7 @@ class BookingSeeder extends Seeder
                 'room_id' => $booking['room_id'],
                 'booked_for' => $booking['booked_for'],
                 'start_date' => $booking['start_date'],
-                'end_date' => $booking['end_date']
+                'end_date' => $booking['end_date'],
             ]);
         }
     }

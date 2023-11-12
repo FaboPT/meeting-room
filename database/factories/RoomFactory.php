@@ -18,7 +18,7 @@ class RoomFactory extends Factory
     {
         return [
             'name' => fake()->name,
-            'capacity' => fake()->randomDigit()
+            'capacity' => fake()->randomDigit(),
         ];
     }
 }
