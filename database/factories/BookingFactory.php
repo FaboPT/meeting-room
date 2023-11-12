@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Room;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,7 +17,7 @@ class BookingFactory extends Factory
     public function definition(): array
     {
         return [
-            'room_id' => Room::factory()->create()->get('id'),
+            'room_id' => fake()->unique()->randomDigit(),
             'booked_for' => fake()->safeEmail(),
             'start_date' => fake()->dateTime(),
             'end_date' => fake()->dateTime(),
