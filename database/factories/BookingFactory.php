@@ -19,6 +19,7 @@ class BookingFactory extends Factory
     {
         return [
             'room_id' => Room::factory()->create()->get('id'),
+            'booked_for' => fake()->safeEmail(),
             'start_date' => fake()->dateTime(),
             'end_date' => fake()->dateTime()
         ];
