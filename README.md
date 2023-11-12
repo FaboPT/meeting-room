@@ -7,9 +7,10 @@
 ## Info
 
 - [Laravel Info](https://laravel.com/docs/10.x/installation)
+- [Laravel Breeze](https://laravel.com/docs/10.x/starter-kits#laravel-breeze)
+- [Laravel Pint](https://laravel.com/docs/10.x/pint)
 
 ## Installation/Configuration
-
 
 ### Copy all file .env.example to .env
 
@@ -88,7 +89,13 @@ docker-compose exec app npm run build
 Host: 127.0.0.1
 Port: 3308
 Username: root
-Password: yourdatabasepassword
+Password: yourpassword
+```
+
+## Commands for devs
+
+```
+docker-compose exec app php artisan
 ```
 
 ## Extras
