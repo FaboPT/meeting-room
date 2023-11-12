@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Foundation\Application;
+use App\Http\Controllers\BookingController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -24,3 +24,10 @@ Route::get('/dashboard', static function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 require __DIR__ . '/auth.php';
+
+Route::middleware('auth')->group(function () {
+    Route::prefix('/bookings')->controller(BookingController::class)->name('booking.')->group(function () {
+        Route::get('', 'index')->name('index');
+        Route::post('', 'store')->name('store')->middleware('booking.check');
+    });
+});
