@@ -3,7 +3,6 @@
 use App\Http\Controllers\AvailabilityController;
 use App\Http\Controllers\BookingController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,16 +16,12 @@ use Inertia\Inertia;
 */
 
 Route::get('/', static function () {
-    return redirect()->route('dashboard');
+    return redirect()->route('booking.index');
 })->name('home');
-
-Route::get('/dashboard', static function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 require __DIR__.'/auth.php';
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('/bookings')->controller(BookingController::class)->name('booking.')->group(function () {
         Route::get('', 'index')->name('index');
         Route::post('', 'store')->name('store')->middleware('booking.check');
