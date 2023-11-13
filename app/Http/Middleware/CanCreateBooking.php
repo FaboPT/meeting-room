@@ -18,7 +18,7 @@ class CanCreateBooking
     /**
      * Handle an incoming request.
      *
-     * @param \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response) $next
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
     {
@@ -30,6 +30,6 @@ class CanCreateBooking
 
     private function isCreatable(StoreBookingRequest $request): bool
     {
-        return !$this->bookingRepository->checkBookings($request->get('room_id'), $request->get('start_date'), $request->get('end_date'));
+        return ! $this->bookingRepository->checkBookings($request->get('room_id'), $request->get('start_date'), $request->get('end_date'));
     }
 }

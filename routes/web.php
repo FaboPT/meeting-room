@@ -24,7 +24,7 @@ Route::get('/dashboard', static function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';
 
 Route::middleware('auth')->group(function () {
     Route::prefix('/bookings')->controller(BookingController::class)->name('booking.')->group(function () {
