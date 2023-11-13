@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AvailabilityController;
 use App\Http\Controllers\BookingController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -29,5 +30,9 @@ Route::middleware('auth')->group(function () {
     Route::prefix('/bookings')->controller(BookingController::class)->name('booking.')->group(function () {
         Route::get('', 'index')->name('index');
         Route::post('', 'store')->name('store')->middleware('booking.check');
+    });
+
+    Route::prefix('/availabilities')->controller(AvailabilityController::class)->name('availability.')->group(function () {
+        Route::get('', 'index')->name('index');
     });
 });

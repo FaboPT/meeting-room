@@ -42,4 +42,16 @@ class BookingRepository extends BaseRepository
             ->where('start_date', '<', $end_date)
             ->where('end_date', '>', $start_date)->get()->count();
     }
+
+    public function availabilities(Date $date, int $participants): Collection
+    {
+        return $this->booking->newQuery()
+            ->whereHas('room', function ($query) use ($participants) {
+                $query->where('capacity', '>=', $participants);
+            })
+            ->where('start_date', '<', $date)
+            ->where('end_date', '>', $date)
+            ->get();
+
+    }
 }

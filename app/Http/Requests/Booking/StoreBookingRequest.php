@@ -11,7 +11,7 @@ class StoreBookingRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,8 +24,8 @@ class StoreBookingRequest extends FormRequest
         return [
             'booked_for' => 'bail|required|email',
             'room_id' => 'bail|required|exists:rooms,id',
-            'start_date' => 'bail|required|date|date_format:Y-m-d H:i',
-            'end_date' => 'bail|required|date|date_format:Y-m-d H:i|after_or_equal:start_date',
+            'start_date' => 'bail|required|date|date_format:Y-m-d H:i|after_or_equal:2025-01-01 00:00|before_or_equal:2025-01-07 23:59',
+            'end_date' => 'bail|required|date|date_format:Y-m-d H:i|after_or_equal:start_date|before_or_equal:2025-01-07 23:59',
         ];
     }
 }
