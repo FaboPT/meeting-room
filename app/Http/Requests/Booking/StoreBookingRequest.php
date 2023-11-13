@@ -25,7 +25,14 @@ class StoreBookingRequest extends FormRequest
             'booked_for' => 'bail|required|email',
             'room_id' => 'bail|required|exists:rooms,id',
             'start_date' => 'bail|required|date|date_format:Y-m-d H:i|after_or_equal:2025-01-01 00:00|before_or_equal:2025-01-07 23:59',
-            'end_date' => 'bail|required|date|date_format:Y-m-d H:i|after_or_equal:start_date|before_or_equal:2025-01-07 23:59',
+            'end_date' => 'bail|required|date|date_format:Y-m-d H:i|after_or_equal:start_date|before_or_equal:2025-01-07 23:59', function ($attribute, $value, $fail) {
+                // Custom rule to check if end_date is on the same day as start_date
+                $start_date = $this->input('start_date');
+
+                if (date('Y-m-d', strtotime($value)) !== date('Y-m-d', strtotime($start_date))) {
+                    $fail('The end date must be on the same day as the start date.');
+                }
+            },
         ];
     }
 }
