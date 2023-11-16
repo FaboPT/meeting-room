@@ -15,7 +15,7 @@ final class AvailabilityService
 
     public function availabilities(Date $dateBooking, int $participants): Response
     {
-        $availabilities = $this->bookingRepository->availabilities($dateBooking, $participants);
+        $availabilities = $this->bookingRepository->getAvailabilities($dateBooking, $participants);
 
         return Inertia::render('Availabilities/Index', [
             'availabilities' => $availabilities,

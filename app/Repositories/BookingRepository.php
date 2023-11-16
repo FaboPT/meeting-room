@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Booking;
+use App\Models\Room;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Date;
@@ -11,8 +12,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class BookingRepository extends BaseRepository
 {
-    public function __construct(private readonly Booking $booking)
-    {
+    public function __construct(
+        private readonly Booking $booking,
+        private Room $room
+    ) {
     }
 
     public function store(array $attributes): Model
@@ -43,15 +46,37 @@ class BookingRepository extends BaseRepository
             ->where('end_date', '>', $start_date)->get()->count();
     }
 
-    public function availabilities(Date $date, int $participants): Collection
+    public function getAvailabilities(Date $date, int $participants): array
     {
-        return $this->booking->newQuery()
-            ->whereHas('room', function ($query) use ($participants) {
-                $query->where('capacity', '>=', $participants);
-            })
-            ->where('start_date', '<', $date)
-            ->where('end_date', '>', $date)
-            ->get();
+        $availableRooms = $this->getAvailableRooms($date, $participants);
 
+        // Query available dates for each room
+        $availabilities = [];
+        foreach ($availableRooms as $room) {
+            $availableDates = Booking::where('room_id', $room->id)
+                ->where('start_date', '<', $date)
+                ->where('end_date', '>', $date)
+                ->pluck('start_date');
+
+            $availabilities[] = [
+                'room' => $room,
+                'available_dates' => $availableDates,
+            ];
+        }
+
+        return $availabilities;
+
+    }
+
+    /**
+     * @return Collection<Room>
+     */
+    private function getAvailableRooms(Date $date, int $participants): Collection
+    {
+        return $this->room->newQuery()
+            ->whereDoesntHave('bookings', function ($query) use ($date) {
+                $query->where('start_date', '<', $date)
+                    ->where('end_date', '>', $date);
+            })->where('capacity', '>=', $participants)->get();
     }
 }
