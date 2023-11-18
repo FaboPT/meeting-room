@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Availabity\GetAvailabilityRequest;
 use App\Services\AvailabilityService;
+use Inertia\Inertia;
 use Inertia\Response;
 
 class AvailabilityController extends Controller
@@ -15,8 +16,13 @@ class AvailabilityController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(GetAvailabilityRequest $request): Response
+    public function index(): Response
     {
-        return $this->availabilityService->availabilities($request->get('date'), $request->get('participants'));
+        return Inertia::render('Availabilities/Index');
+    }
+
+    public function search(GetAvailabilityRequest $request): Response
+    {
+        return $this->availabilityService->searchAvailabilities($request->get('date_booking'), $request->get('participants'));
     }
 }

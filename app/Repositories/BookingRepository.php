@@ -7,7 +7,6 @@ use App\Models\Room;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Date;
 use Nette\NotImplementedException;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -47,7 +46,7 @@ class BookingRepository extends BaseRepository
             ->where('end_date', '>', $start_date->toDateTimeString())->get()->count();
     }
 
-    public function getAvailabilities(Date $date, int $participants): array
+    public function getAvailabilities(Carbon $date, int $participants): array
     {
         $availableRooms = $this->getAvailableRooms($date, $participants);
 
@@ -72,12 +71,12 @@ class BookingRepository extends BaseRepository
     /**
      * @return Collection<Room>
      */
-    private function getAvailableRooms(Date $date, int $participants): Collection
+    private function getAvailableRooms(Carbon $date, int $participants): Collection
     {
         return $this->room->newQuery()
             ->whereDoesntHave('bookings', function ($query) use ($date) {
-                $query->where('start_date', '<', $date)
-                    ->where('end_date', '>', $date);
+                $query->where('start_date', '<', $date->toDateTimeString())
+                    ->where('end_date', '>', $date->toDateTimeString());
             })->where('capacity', '>=', $participants)->get();
     }
 }

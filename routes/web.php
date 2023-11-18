@@ -30,5 +30,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::prefix('/availabilities')->controller(AvailabilityController::class)->name('availability.')->group(function () {
         Route::get('', 'index')->name('index');
+        Route::post('/search', 'search')->name('search');
     });
 });

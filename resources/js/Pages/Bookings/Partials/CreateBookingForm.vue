@@ -98,10 +98,10 @@ const createBooking = () => {
                 <SelectInput
                     v-model="form.room_id"
                     name="room"
+                    id="room_id"
                     autocomplete="room_id"
                     class="mt-1 block w-full"
                     :rooms="rooms"
-
                 >
                     <option class="mt-1 block w-full" v-for="room in rooms" :key="room.id" :value="room.id">{{ room.name }}</option>
                 </SelectInput>
