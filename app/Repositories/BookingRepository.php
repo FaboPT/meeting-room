@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Booking;
 use App\Models\Room;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Date;
@@ -38,12 +39,12 @@ class BookingRepository extends BaseRepository
         return $this->booking->with('room')->get();
     }
 
-    public function checkBookings(int $room_id, Date $start_date, Date $end_date): int
+    public function checkBookings(int $room_id, Carbon $start_date, Carbon $end_date): int
     {
         return $this->booking->newQuery()
             ->where('room_id', $room_id)
-            ->where('start_date', '<', $end_date)
-            ->where('end_date', '>', $start_date)->get()->count();
+            ->where('start_date', '<', $end_date->toDateTimeString())
+            ->where('end_date', '>', $start_date->toDateTimeString())->get()->count();
     }
 
     public function getAvailabilities(Date $date, int $participants): array

@@ -3,13 +3,16 @@
 namespace App\Services;
 
 use App\Repositories\BookingRepository;
+use App\Repositories\RoomRepository;
 use Inertia\Inertia;
 use Inertia\Response;
 
 final class BookingService
 {
-    public function __construct(private readonly BookingRepository $bookingRepository)
-    {
+    public function __construct(
+        private readonly BookingRepository $bookingRepository,
+        private readonly RoomRepository $roomRepository,
+    ) {
     }
 
     public function all(): Response
@@ -32,6 +35,10 @@ final class BookingService
 
     public function create(): Response
     {
-        return Inertia::render('Bookings/Create');
+        $rooms = $this->roomRepository->all();
+
+        return Inertia::render('Bookings/Create', [
+            'rooms' => $rooms,
+        ]);
     }
 }

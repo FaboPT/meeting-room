@@ -24,6 +24,7 @@ require __DIR__.'/auth.php';
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('/bookings')->controller(BookingController::class)->name('booking.')->group(function () {
         Route::get('', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
         Route::post('', 'store')->name('store')->middleware('booking.check');
     });
 
