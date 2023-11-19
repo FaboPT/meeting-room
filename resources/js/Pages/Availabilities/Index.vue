@@ -2,7 +2,6 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import {Head, usePage} from '@inertiajs/vue3';
 import SearchAvailabityForm from "@/Pages/Availabilities/Partials/SearchAvailabityForm.vue";
-import CreateBookingForm from "@/Pages/Bookings/Partials/CreateBookingForm.vue";
 import ListAvailabilities from "@/Pages/Availabilities/Partials/ListAvailabilities.vue";
 
 const { availabilities } = usePage().props;

@@ -35,7 +35,7 @@ class BookingRepository extends BaseRepository
 
     public function all(): Collection
     {
-        return $this->booking->with('room')->get();
+        return $this->booking->with('room')->orderBy('room_id')->orderBy('start_date')->get();
     }
 
     public function checkBookings(int $room_id, Carbon $start_date, Carbon $end_date): int

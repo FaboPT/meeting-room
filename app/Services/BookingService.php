@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Repositories\BookingRepository;
 use App\Repositories\RoomRepository;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -24,13 +26,19 @@ final class BookingService
         ]);
     }
 
-    public function store(array $data): Response
+    public function store(array $data): RedirectResponse
     {
-        $bookings = $this->bookingRepository->store($data);
+        try {
+            DB::transaction(function () use ($data) {
+                $this->bookingRepository->store($data);
+            });
 
-        return Inertia::render('Bookings/Index', [
-            'bookings' => $bookings,
-        ]);
+            return redirect()->route('booking.index')->with('success', 'Booking successfully created');
+
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+
     }
 
     public function create(): Response

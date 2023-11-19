@@ -18,7 +18,7 @@ const formatDateTime = (dateTimeString) => {
         <div>
             <ul>
                 <li v-for="booking in bookings" :key="booking.id">
-                    {{ formatDateTime(booking.start_date) }} - {{ formatDateTime(booking.end_date) }} <b> Booked for: </b> {{ booking.booked_for }} <b>Room:</b> {{ booking.room.name }}
+                    <b>Room:</b> {{ booking.room.name }} - {{ formatDateTime(booking.start_date) }} - {{ formatDateTime(booking.end_date) }} <b> Booked for: </b> {{ booking.booked_for }}
             </li>
         </ul>
         </div>

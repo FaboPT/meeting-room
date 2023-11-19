@@ -4,11 +4,6 @@ import {Head, usePage, Link} from '@inertiajs/vue3';
 import ListBookings from "@/Pages/Bookings/Partials/ListBookings.vue";
 
 const { bookings } = usePage().props;
-
-const createBooking = () => {
-    // Navigate to the 'booking.create' route
-    route('booking.create');
-};
 </script>
 
 <template>

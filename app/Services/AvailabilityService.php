@@ -30,6 +30,9 @@ final class AvailabilityService
         $dateBooking = $this->parseToDate($dateBooking);
         $availabilities = $this->bookingRepository->getAvailabilities($dateBooking, $participants);
 
-        return redirect()->back()->with('availabilities', $availabilities);
+        session()->put('availabilities', $availabilities);
+        session()->save();
+
+        return redirect()->route('availability.index')->with('availabilities', $availabilities);
     }
 }
