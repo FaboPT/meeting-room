@@ -14,15 +14,13 @@ const formatDateTime = (dateTimeString) => {
 
 <template>
     <section>
-        <h2>Bookings</h2>
+        <h2 class="font-semibold ">Bookings</h2>
         <div>
             <ul>
                 <li v-for="booking in bookings" :key="booking.id">
                     {{ formatDateTime(booking.start_date) }} - {{ formatDateTime(booking.end_date) }} <b> Booked for: </b> {{ booking.booked_for }} <b>Room:</b> {{ booking.room.name }}
             </li>
         </ul>
-
-
         </div>
     </section>
 </template>
