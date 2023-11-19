@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Availabity\GetAvailabilityRequest;
 use App\Services\AvailabilityService;
-use Inertia\Inertia;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
 
 class AvailabilityController extends Controller
@@ -18,10 +18,10 @@ class AvailabilityController extends Controller
      */
     public function index(): Response
     {
-        return Inertia::render('Availabilities/Index');
+        return $this->availabilityService->index();
     }
 
-    public function search(GetAvailabilityRequest $request): Response
+    public function search(GetAvailabilityRequest $request): RedirectResponse
     {
         return $this->availabilityService->searchAvailabilities($request->get('date_booking'), $request->get('participants'));
     }

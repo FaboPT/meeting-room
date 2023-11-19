@@ -14,7 +14,7 @@ class BookingRepository extends BaseRepository
 {
     public function __construct(
         private readonly Booking $booking,
-        private Room $room
+        private readonly Room $room
     ) {
     }
 
@@ -53,10 +53,14 @@ class BookingRepository extends BaseRepository
         // Query available dates for each room
         $availabilities = [];
         foreach ($availableRooms as $room) {
-            $availableDates = Booking::where('room_id', $room->id)
-                ->where('start_date', '<', $date)
-                ->where('end_date', '>', $date)
-                ->pluck('start_date');
+            $bookedDates = $this->booking->newQuery()
+                ->where('room_id', $room->id)
+                ->whereDate('start_date', '<=', $date)
+                ->whereDate('end_date', '>=', $date)
+                ->pluck('end_date', 'start_date');
+
+            //$availableDates = $bookedDates->isEmpty() ? ['Free from 8 AM to 6 PM'] : $bookedDates->toArray();
+            $availableDates = $bookedDates->isEmpty() ? ['Free from 8 AM to 6 PM'] : $this->getAvailableDates($date, $bookedDates);
 
             $availabilities[] = [
                 'room' => $room,
@@ -78,5 +82,49 @@ class BookingRepository extends BaseRepository
                 $query->where('start_date', '<', $date->toDateTimeString())
                     ->where('end_date', '>', $date->toDateTimeString());
             })->where('capacity', '>=', $participants)->get();
+    }
+
+    private function getAvailableDates(Carbon $dateBooking, \Illuminate\Support\Collection $bookedDates): array
+    {
+        $dayStart = $dateBooking->copy()->setHour(8); // Set the start time, e.g., 8 AM
+        $dayEnd = $dateBooking->copy()->setHour(18);   // Set the end time, e.g., 6 PM
+
+        $availableDates = [];
+
+        // Add the initial period if available
+        if ($dayStart->lt($bookedDates->keys()->first())) {
+            $availableDates[] = [
+                'start' => $dayStart->format('Y-m-d H:i:s'),
+                'end' => $bookedDates->keys()->first(),
+            ];
+        }
+
+        // Iterate over the booked periods and update the available dates
+        foreach ($bookedDates as $startDate => $endDate) {
+            // Update the start time for the next iteration
+            $dayStart = max($dayStart, $endDate);
+
+            // Check if there is any time available between the bookings
+            $nextStartDate = $bookedDates->keys()->first(function ($key) use ($dayStart) {
+                return $key > $dayStart;
+            });
+
+            if ($nextStartDate && $dayStart->lt($nextStartDate)) {
+                $availableDates[] = [
+                    'start' => $dayStart->format('Y-m-d H:i:s'),
+                    'end' => $nextStartDate,
+                ];
+            }
+        }
+
+        // Add the final period if available
+        if ($dayEnd->gt($dayStart)) {
+            $availableDates[] = [
+                'start' => $dayStart->format('Y-m-d H:i:s'),
+                'end' => $dayEnd->format('Y-m-d H:i:s'),
+            ];
+        }
+
+        return $availableDates;
     }
 }

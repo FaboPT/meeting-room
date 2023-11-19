@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Repositories\BookingRepository;
 use App\Utils\Traits\Utils;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -15,13 +16,20 @@ final class AvailabilityService
     {
     }
 
-    public function searchAvailabilities(string $dateBooking, int $participants): Response
+    public function index(): Response
     {
-        $dateBooking = $this->parseToDate($dateBooking);
-        $availabilities = $this->bookingRepository->getAvailabilities($dateBooking, $participants);
+        $availabilities = session('availabilities', []);
 
         return Inertia::render('Availabilities/Index', [
             'availabilities' => $availabilities,
         ]);
+    }
+
+    public function searchAvailabilities(string $dateBooking, int $participants): RedirectResponse
+    {
+        $dateBooking = $this->parseToDate($dateBooking);
+        $availabilities = $this->bookingRepository->getAvailabilities($dateBooking, $participants);
+
+        return redirect()->back()->with('availabilities', $availabilities);
     }
 }

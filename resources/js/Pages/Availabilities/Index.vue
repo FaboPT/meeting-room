@@ -1,7 +1,13 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import {Head} from '@inertiajs/vue3';
+import {Head, usePage} from '@inertiajs/vue3';
 import SearchAvailabityForm from "@/Pages/Availabilities/Partials/SearchAvailabityForm.vue";
+import CreateBookingForm from "@/Pages/Bookings/Partials/CreateBookingForm.vue";
+import ListAvailabilities from "@/Pages/Availabilities/Partials/ListAvailabilities.vue";
+
+const { availabilities } = usePage().props;
+console.log(availabilities);
+
 </script>
 
 <template>
@@ -17,6 +23,15 @@ import SearchAvailabityForm from "@/Pages/Availabilities/Partials/SearchAvailabi
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
                         <SearchAvailabityForm class="max-w-xl"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="py-12" v-if="availabilities && availabilities.length > 0">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="p-6 text-gray-900">
+                        <ListAvailabilities :availabilities="availabilities" class="max-w-xl"/>
                     </div>
                 </div>
             </div>
