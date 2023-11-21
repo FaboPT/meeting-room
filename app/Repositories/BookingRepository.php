@@ -59,8 +59,7 @@ class BookingRepository extends BaseRepository
                 ->whereDate('end_date', '>=', $date)
                 ->pluck('end_date', 'start_date');
 
-            //$availableDates = $bookedDates->isEmpty() ? ['Free from 8 AM to 6 PM'] : $bookedDates->toArray();
-            $availableDates = $bookedDates->isEmpty() ? ['Free from 8 AM to 6 PM'] : $this->getAvailableDates($date, $bookedDates);
+            $availableDates = $bookedDates->isEmpty() ? [$date->toDateTimeLocalString().' - '.'Free from 8 AM to 6 PM'] : $this->getAvailableDates($date, $bookedDates);
 
             $availabilities[] = [
                 'room' => $room,

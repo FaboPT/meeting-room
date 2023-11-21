@@ -3,14 +3,6 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import {Head} from '@inertiajs/vue3';
 import CreateBookingForm from "@/Pages/Bookings/Partials/CreateBookingForm.vue";
 
-defineProps({
-    mustVerifyEmail: {
-        type: Boolean,
-    },
-    status: {
-        type: String,
-    },
-});
 </script>
 
 <template>

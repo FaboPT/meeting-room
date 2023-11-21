@@ -20,6 +20,10 @@ final class AvailabilityService
     {
         $availabilities = session('availabilities', []);
 
+        if (session()->has('availabilities')) {
+            Inertia::share('availabilities', $availabilities);
+        }
+
         return Inertia::render('Availabilities/Index', [
             'availabilities' => $availabilities,
         ]);
@@ -33,6 +37,6 @@ final class AvailabilityService
         session()->put('availabilities', $availabilities);
         session()->save();
 
-        return redirect()->route('availability.index')->with('availabilities', $availabilities);
+        return redirect(route('availability.index'))->with('availabilities', $availabilities);
     }
 }
