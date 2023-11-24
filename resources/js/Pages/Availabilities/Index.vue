@@ -4,9 +4,9 @@ import {Head, usePage} from '@inertiajs/vue3';
 import SearchAvailabityForm from "@/Pages/Availabilities/Partials/SearchAvailabityForm.vue";
 import ListAvailabilities from "@/Pages/Availabilities/Partials/ListAvailabilities.vue";
 
-const { availabilities } = usePage().props;
-console.log(availabilities);
-
+const { page } = usePage()
+const availabilties = commputed(() => page.props.availabiltiies)
+console.log(availabilities)
 </script>
 
 <template>
