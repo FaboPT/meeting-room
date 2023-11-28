@@ -19,7 +19,7 @@ const formatDateTime = (dateTimeString) => {
             <ul>
                 <li v-for="availability in availabilities" :key="availability.room.id">
                     <strong>{{ availability.room.name }}</strong>
-                    <ul v-if="!availability.available_dates[0].includes('Free from 8 AM to 6 PM')">
+                    <ul v-if="availability.available_dates[0].start">
                         <li v-for="dateRange in availability.available_dates" :key="dateRange.start">
                             {{ formatDateTime(dateRange.start) }} - {{ formatDateTime(dateRange.end) }}
                         </li>
