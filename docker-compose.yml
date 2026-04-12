@@ -16,7 +16,7 @@ services:
         networks:
             - meeting-room-app
     mysql:
-        image: mysql:8
+        image: mysql:lts
         container_name: mysql_meeting_room_app
         restart: unless-stopped
         tty: true

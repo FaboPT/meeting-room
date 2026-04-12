@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Booking\StoreBookingRequest;
 use App\Services\BookingService;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
 
 class BookingController extends Controller
@@ -28,7 +29,7 @@ class BookingController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreBookingRequest $request): Response
+    public function store(StoreBookingRequest $request): RedirectResponse
     {
         return $this->bookingService->store($request->validated());
     }
